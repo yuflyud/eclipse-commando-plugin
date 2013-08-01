@@ -6,7 +6,7 @@
       <command
             name="Run 'mvn exec:exec'"
             categoryId="org.eclipse.ui.category.window"
-            id="org.melord.pde.explorer.commands.sampleCommand">
+            id="com.softserveinc.eclipsecommando.commands.sampleCommand">
       </command>
    </extension>
    <extension
@@ -14,12 +14,13 @@
       <menuContribution
             locationURI="popup:org.eclipse.ui.popup.any?after=additions">
          <separator
-               name="org.melord.pde.explorer.separator1">
+               name="com.softserveinc.eclipsecommando.menus.separator1"
+               visible="true">
          </separator>
          <command
-               commandId="org.melord.pde.explorer.commands.sampleCommand"
+               commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
                icon="icons/sample.gif"
-               id="org.melord.pde.explorer.menus.sampleCommand"
+               id="com.softserveinc.eclipsecommando.menus.sampleCommand"
                mnemonic="E">
             <visibleWhen>
                <iterate
@@ -43,14 +44,14 @@
    <extension
          point="org.eclipse.ui.handlers">
       <handler
-            commandId="org.melord.pde.explorer.commands.sampleCommand"
+            commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
             class="com.softserveinc.eclipsecommando.handlers.OpenExplorerHandler">
       </handler>
    </extension>
    <extension
          point="org.eclipse.ui.bindings">
       <key
-            commandId="org.melord.pde.explorer.commands.sampleCommand"
+            commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
             sequence="CTRL+`"
             schemeId="org.eclipse.ui.defaultAcceleratorConfiguration">
       </key>
