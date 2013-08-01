@@ -8,8 +8,8 @@ import org.eclipse.core.runtime.NullProgressMonitor;
 import org.eclipse.core.runtime.Status;
 import org.eclipse.core.runtime.jobs.Job;
 
-import com.softserveinc.eclipsecommando.CommandEntry;
 import com.softserveinc.eclipsecommando.activator.Activator;
+import com.softserveinc.eclipsecommando.model.CommandEntry;
 import com.softserveinc.eclipsecommando.utils.ConsoleUtil;
 
 public class ExecuteCommandJob extends Job {
@@ -26,7 +26,7 @@ public class ExecuteCommandJob extends Job {
             monitor = new NullProgressMonitor();
         try {
             // TODO improve task names
-            monitor.beginTask(this.getName(), 10);
+            monitor.beginTask(this.getName(), IProgressMonitor.UNKNOWN);
 
             ProcessBuilder builder = new ProcessBuilder("cmd", "/c", commandEntry.getCommand());
             builder.directory(commandEntry.getWorkDir());

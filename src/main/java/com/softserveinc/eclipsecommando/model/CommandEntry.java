@@ -1,4 +1,4 @@
-package com.softserveinc.eclipsecommando;
+package com.softserveinc.eclipsecommando.model;
 
 import java.io.File;
 

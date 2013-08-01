@@ -4,7 +4,7 @@
 <extension
          point="org.eclipse.ui.commands">
       <command
-            name="Run 'mvn exec:exec'"
+            name="Run command"
             categoryId="org.eclipse.ui.category.window"
             id="com.softserveinc.eclipsecommando.commands.sampleCommand">
       </command>
