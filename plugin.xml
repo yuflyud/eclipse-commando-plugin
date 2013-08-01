@@ -8,6 +8,12 @@
             categoryId="org.eclipse.ui.category.window"
             id="com.softserveinc.eclipsecommando.commands.sampleCommand">
       </command>
+      <command
+            categoryId="org.eclipse.ui.category.window"
+            id="com.softserveinc.eclipsecommando.commands.runCommandLineCommand"
+            name="Open command window here">
+            <commandParameter id="command" name="command"/>
+      </command>
    </extension>
    <extension
          point="org.eclipse.ui.menus">
@@ -17,28 +23,45 @@
                name="com.softserveinc.eclipsecommando.menus.separator1"
                visible="true">
          </separator>
-         <command
-               commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
+         <menu
                icon="icons/sample.gif"
-               id="com.softserveinc.eclipsecommando.menus.sampleCommand"
-               mnemonic="E">
+               id="com.softserveinc.eclipsecommando.menus.executeCommandMenu"
+               label="Execute command..."
+               tooltip="Select existing command or create a new one.">
+            <command
+                  commandId="com.softserveinc.eclipsecommando.commands.runCommandLineCommand"
+                  icon="icons/console.gif"
+                  id="com.softserveinc.eclipsecommando.menus.runCommandLineCommand"
+                  style="push">
+               <parameter
+                     name="command"
+                     value="start">
+               </parameter>
+            </command>
+            <separator
+                  name="com.softserveinc.eclipsecommando.menus.separator2"
+                  visible="true">
+            </separator>
+            <command
+                  commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
+                  icon="icons/sample.gif"
+                  id="com.softserveinc.eclipsecommando.menus.sampleCommand"
+                  style="push">
+            </command>
             <visibleWhen>
-               <iterate
-                     ifEmpty="false">
-                  <or>
-                     <instanceof
-                           value="org.eclipse.core.resources.IResource">
-                     </instanceof>
-                     <instanceof
-                           value="org.eclipse.jdt.core.IJavaElement">
-                     </instanceof>
-                     <instanceof
-                           value="org.eclipse.team.ui.synchronize.ISynchronizeModelElement">
-                     </instanceof>
-                  </or>
-               </iterate>
-            </visibleWhen>
-         </command>
+                  <iterate
+                        ifEmpty="false">
+                     <or>
+                        <instanceof
+                              value="org.eclipse.core.resources.IResource">
+                        </instanceof>
+                        <instanceof
+                              value="org.eclipse.jdt.core.IJavaElement">
+                        </instanceof>
+                     </or>
+                  </iterate>
+               </visibleWhen>
+         </menu>
       </menuContribution>
    </extension>
    <extension
@@ -46,6 +69,10 @@
       <handler
             commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
             class="com.softserveinc.eclipsecommando.handlers.OpenExplorerHandler">
+      </handler>
+      <handler
+            class="com.softserveinc.eclipsecommando.handlers.OpenExplorerHandler"
+            commandId="com.softserveinc.eclipsecommando.commands.runCommandLineCommand">
       </handler>
    </extension>
    <extension

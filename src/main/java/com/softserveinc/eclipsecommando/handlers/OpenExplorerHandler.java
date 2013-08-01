@@ -33,7 +33,8 @@ public class OpenExplorerHandler extends AbstractHandler {
             MessageDialog.openError(window.getShell(), "Commando Error", e.getLocalizedMessage());
             return null;
         }
-        final String command = "mvn exec:exec";
+        final String command = event.getParameter("command") == null ? "mvn exec:exec" : event
+                .getParameter("command");
 
         CommandEntry commandEntry = new CommandEntry(command, new File(path), false, false);
 
