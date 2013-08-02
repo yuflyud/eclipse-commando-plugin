@@ -1,8 +1,12 @@
 package com.softserveinc.eclipsecommando.dialogs;
 
 import org.eclipse.core.databinding.DataBindingContext;
+import org.eclipse.core.databinding.UpdateValueStrategy;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
+import org.eclipse.core.databinding.validation.IValidator;
+import org.eclipse.core.databinding.validation.ValidationStatus;
+import org.eclipse.core.runtime.IStatus;
 import org.eclipse.jface.databinding.swt.SWTObservables;
 import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
@@ -31,6 +35,18 @@ public class CommandDialog extends TrayDialog {
 
     private DataBindingContext bindingContext;
     private CommandEntryPresenter commandEntryPresenter;
+
+    IValidator validator = new IValidator() {
+        @Override
+        public IStatus validate(Object value) {
+            if (value instanceof String) {
+                if (!value.toString().isEmpty()) {
+                    return ValidationStatus.ok();
+                }
+            }
+            return ValidationStatus.error("Command cannot be empty");
+        }
+    };
 
     public CommandDialog(Shell parentShell) {
         super(parentShell);
@@ -108,12 +124,13 @@ public class CommandDialog extends TrayDialog {
     private DataBindingContext initDataBindings() {
         DataBindingContext bindingContext = new DataBindingContext();
 
-        IObservableValue nameTextObserveWidget = SWTObservables.observeText(commandText,
-                SWT.FocusOut);
+        IObservableValue nameTextObserveWidget = SWTObservables
+                .observeText(commandText, SWT.Modify);
         IObservableValue personNameObserveValue = BeansObservables.observeValue(
                 commandEntryPresenter, "command");
 
-        bindingContext.bindValue(nameTextObserveWidget, personNameObserveValue, null, null);
+        bindingContext.bindValue(nameTextObserveWidget, personNameObserveValue,
+                new UpdateValueStrategy().setAfterConvertValidator(validator), null);
         return bindingContext;
     }
 

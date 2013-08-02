@@ -24,7 +24,6 @@
                visible="true">
          </separator>
          <menu
-               icon="icons/sample.gif"
                id="com.softserveinc.eclipsecommando.menus.executeCommandMenu"
                label="Execute command..."
                tooltip="Select existing command or create a new one.">
