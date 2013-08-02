@@ -38,13 +38,9 @@
                      value="start">
                </parameter>
             </command>
-            <separator
-                  name="com.softserveinc.eclipsecommando.menus.separator2"
-                  visible="true">
-            </separator>
             <command
                   commandId="com.softserveinc.eclipsecommando.commands.sampleCommand"
-                  icon="icons/sample.gif"
+                  icon="icons/runcommand.gif"
                   id="com.softserveinc.eclipsecommando.menus.sampleCommand"
                   style="push">
             </command>

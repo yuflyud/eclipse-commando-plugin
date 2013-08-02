@@ -42,6 +42,7 @@ public class OpenExplorerHandler extends AbstractHandler {
         if (command == null) {
             CommandDialog d = new CommandDialog(window.getShell(), commandEntry);
             d.setWindowTitle("Run command");
+            d.setOkButtonText("Run");
             if (d.open() == Dialog.OK)
                 commandEntry = d.getEntry();
             else

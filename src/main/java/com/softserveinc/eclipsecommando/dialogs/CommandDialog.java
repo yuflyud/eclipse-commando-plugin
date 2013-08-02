@@ -4,8 +4,11 @@ import org.eclipse.core.databinding.DataBindingContext;
 import org.eclipse.core.databinding.beans.BeansObservables;
 import org.eclipse.core.databinding.observable.value.IObservableValue;
 import org.eclipse.jface.databinding.swt.SWTObservables;
+import org.eclipse.jface.dialogs.IDialogConstants;
 import org.eclipse.jface.dialogs.TrayDialog;
 import org.eclipse.swt.SWT;
+import org.eclipse.swt.graphics.Font;
+import org.eclipse.swt.graphics.FontData;
 import org.eclipse.swt.graphics.Point;
 import org.eclipse.swt.layout.GridData;
 import org.eclipse.swt.layout.GridLayout;
@@ -22,7 +25,10 @@ import com.softserveinc.eclipsecommando.presenter.impl.CommandEntryPresenter;
 public class CommandDialog extends TrayDialog {
 
     private Text commandText;
+
     private String windowTitle;
+    private String okButtonText;
+
     private DataBindingContext bindingContext;
     private CommandEntryPresenter commandEntryPresenter;
 
@@ -51,10 +57,11 @@ public class CommandDialog extends TrayDialog {
 
         // command text
         commandText = new Text(grpCommand, SWT.BORDER);
-        // commandText.setFont(SWTResourceManager.getFont("Consolas", 9,
-        // SWT.NORMAL));
+
+        FontData defaultFont = new FontData("Consolas", 9, SWT.NORMAL);
+        commandText.setFont(new Font(this.getShell().getDisplay(), defaultFont));
+
         commandText.setLayoutData(new GridData(SWT.FILL, SWT.CENTER, true, false));
-        commandText.setTextLimit(50);
 
         // additional group
         Group grpAdditionalActions = new Group(composite, SWT.NONE);
@@ -74,6 +81,28 @@ public class CommandDialog extends TrayDialog {
 
         bindingContext = initDataBindings();
         return parent;
+    }
+
+    @Override
+    protected void createButtonsForButtonBar(Composite parent) {
+        super.createButtonsForButtonBar(parent);
+
+        Button ok = getButton(IDialogConstants.OK_ID);
+        ok.setText((okButtonText == null || okButtonText.isEmpty()) ? ok.getText() : okButtonText);
+        setButtonLayoutData(ok);
+    }
+
+    @Override
+    protected void configureShell(Shell shell) {
+        shell.setMinimumSize(new Point(450, 220));
+        super.configureShell(shell);
+        shell.setText(windowTitle);
+    }
+
+    @Override
+    public boolean close() {
+        bindingContext.dispose();
+        return super.close();
     }
 
     private DataBindingContext initDataBindings() {
@@ -102,16 +131,12 @@ public class CommandDialog extends TrayDialog {
         return windowTitle;
     }
 
-    @Override
-    protected void configureShell(Shell shell) {
-        shell.setMinimumSize(new Point(450, 220));
-        super.configureShell(shell);
-        shell.setText(windowTitle);
+    public String getOkButtonText() {
+        return okButtonText;
     }
 
-    @Override
-    public boolean close() {
-        bindingContext.dispose();
-        return super.close();
+    public void setOkButtonText(String okButtonText) {
+        this.okButtonText = okButtonText;
     }
+
 }
